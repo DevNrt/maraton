@@ -40,7 +40,7 @@ async function updateNivel(req, res) {
   const nivel = collection(firestore, "Niveles");
   var variableCambiare = "";
 
-  if (req.body.nombreN != "") {
+  if (req.body.nombreN != undefined) {
     variableCambiare = req.body.nombreN;
     const q = query(nivel, where("nombre", "==", req.body.nombreA));
     const querySnapshot = await getDocs(q);
@@ -61,7 +61,7 @@ async function updateNivel(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.dificultadN != "") {
+  } else if (req.body.dificultadN != undefined) {
     variableCambiare = req.body.dificultadN;
     const q = query(nivel, where("dificultad", "==", req.body.dificultadA));
     const querySnapshot = await getDocs(q);

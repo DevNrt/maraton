@@ -30,7 +30,7 @@ async function createUser(req, res) {
           res.send("Error: That email address is invalid!");
         }
 
-        res.send("Error");
+        res.send("Error"+error);
       });
   }
 }

@@ -21,7 +21,7 @@ async function createCustomer(req, res) {
     req.body.carrera == "" ||
     req.body.nivel == "" ||
     req.body.correo == "" ||
-    req.body.cargo == ""
+    req.body.cargo == "" 
   ) {
     res.send("Error: Campos vacios!");
   } else {
@@ -50,7 +50,7 @@ async function updateCustomer(req, res) {
   const concursante = collection(firestore, "Concursante");
   var variableCambiare = "";
 
-  if (req.body.nombreN != "") {
+  if (req.body.nombreN != undefined) {
     variableCambiare = req.body.nombreN;
     const q = query(concursante, where("nombre", "==", req.body.nombreA));
     const querySnapshot = await getDocs(q);
@@ -71,7 +71,7 @@ async function updateCustomer(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.apellidoN != "") {
+  } else if (req.body.apellidoN != undefined) {
     variableCambiare = req.body.apellidoN;
     const q = query(concursante, where("apellido", "==", req.body.apellidoA));
     const querySnapshot = await getDocs(q);
@@ -92,7 +92,7 @@ async function updateCustomer(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.codigoN != "") {
+  } else if (req.body.codigoN != undefined) {
     variableCambiare = req.body.codigoN;
     const q = query(concursante, where("codigo", "==", req.body.codigoA));
     const querySnapshot = await getDocs(q);
@@ -113,7 +113,7 @@ async function updateCustomer(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.carreraN != "") {
+  } else if (req.body.carreraN != undefined) {
     variableCambiare = req.body.carreraN;
     const q = query(concursante, where("carrera", "==", req.body.carreraA));
     const querySnapshot = await getDocs(q);
@@ -134,7 +134,7 @@ async function updateCustomer(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.nivelN != "") {
+  } else if (req.body.nivelN != undefined) {
     variableCambiare = req.body.nivelN;
     const q = query(concursante, where("nivel", "==", req.body.nivelA));
     const querySnapshot = await getDocs(q);
@@ -155,7 +155,7 @@ async function updateCustomer(req, res) {
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.correoN != "") {
+  } else if (req.body.correoN != undefined) {
     variableCambiare = req.body.correoN;
     const q = query(concursante, where("correo", "==", req.body.correoA));
     const querySnapshot = await getDocs(q);
