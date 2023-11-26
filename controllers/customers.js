@@ -20,7 +20,8 @@ async function createCustomer(req, res) {
     req.body.codigo == "" ||
     req.body.carrera == "" ||
     req.body.nivel == "" ||
-    req.body.correo == ""
+    req.body.correo == "" ||
+    req.body.cargo == ""
   ) {
     res.send("Error: Campos vacios!");
   } else {
@@ -31,6 +32,7 @@ async function createCustomer(req, res) {
       carrera: req.body.carrera,
       nivel: req.body.nivel,
       correo: req.body.correo,
+      cargo: req.body.cargo
     };
 
     const concursante = collection(firestore, "Concursante");
