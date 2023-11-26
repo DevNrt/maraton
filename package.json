@@ -1,0 +1,28 @@
+{
+  "name": "maraton_back",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "maraton",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevNrt/maraton.git"
+  },
+  "author": "devnrt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevNrt/maraton/issues"
+  },
+  "homepage": "https://github.com/DevNrt/maraton#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase": "^10.6.0",
+    "firebase-admin": "^11.11.0",
+    "nodemon": "^3.0.1"
+  }
+}
