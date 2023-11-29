@@ -76,8 +76,6 @@ async function registrarGrupo(req, res) {
       .catch((error) => {
         res.send(error);
       });
-      //console.log(dataReto[1].gruposAso);
-      console.log(dataReto);
 
 }
 
