@@ -12,17 +12,20 @@ import {
 } from "firebase/firestore";
 
 
+
 const firestore = db.database;
+
 
 async function createReto(req, res) {
   if (
-    req.body.equipoA == "" || req.body.equipoB == "" 
+    req.body.nombreReto == "" || req.body.descripcion ==""
   ) {
     res.send("Error: Campos vacios!");
   } else {
     var datosReto = {
-      equipoA: req.body.equipoA,
-      equipoB: req.body.equipoB
+      nombreReto: req.body.nombreReto,
+      gruposAso: req.body.gruposAso,
+      descripcion: req.body.descripcion
     };
 
     const reto = collection(firestore, "Retos");
@@ -36,28 +39,53 @@ async function createReto(req, res) {
   }
 }
 
-async function readRetoA(req, res) {
-  const reto = collection(firestore, "Retos");
-  const q = query(
-    reto,
-    where("equipoA", "==", req.body.equipoA)
-  );
+async function registrarGrupo(req, res) {
+
+  const grupo = collection(firestore, "Grupos");
+  const q = query(grupo, where("nombre", "==", req.body.nombre));
   const querySnapshot = await getDocs(q);
-  var data = [];
+  var dataGrupo = [];
   var i = 0;
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    data[i] = doc.data();
+    dataGrupo[i] = doc.data();
     i++;
   });
-  res.send(data);
+
+  const reto = collection(firestore, "Retos");
+  const q1 = query(reto, where("nombreReto", "==", req.body.nombreReto));
+  const querySnapshot1 = await getDocs(q1);
+  var id = " ";
+  var dataReto = [];
+  querySnapshot1.forEach((doc1) => {
+    dataReto[i]=doc1.data();
+    id = doc1.id;
+    i++;
+  });
+
+  dataReto=dataReto[1].gruposAso
+ 
+  dataReto=dataReto.concat(dataGrupo[0])
+ 
+  const retosId = doc(firestore, "Retos", id);
+    updateDoc(retosId, {
+      "gruposAso": dataReto,
+    })
+      .then(() => {
+        res.send("Notificación: Reto actualizado!");
+      })
+      .catch((error) => {
+        res.send(error);
+      });
+      //console.log(dataReto[1].gruposAso);
+      console.log(dataReto);
+
 }
 
-async function readRetoB(req, res) {
+async function readReto(req, res) {
   const reto = collection(firestore, "Retos");
   const q = query(
     reto,
-    where("equipoB", "==", req.body.equipoB)
+    where("nombreReto", "==", req.body.nombreReto)
   );
   const querySnapshot = await getDocs(q);
   var data = [];
@@ -91,7 +119,7 @@ async function deleteReto(req, res) {
 
 export default {
   createReto,
-  readRetoA,
-  readRetoB,
+  registrarGrupo,
+  readReto,
   deleteReto
 };

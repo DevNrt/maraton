@@ -27,8 +27,8 @@ api.post("/readGrupo",createGrupo.readGrupo)
 api.post("/deleteGrupo",createGrupo.deleteGrupo)
 api.post("/validacion",createGrupo.validacion)
 api.post("/createReto",createReto.createReto)
-api.post("/retoA",createReto.readRetoA)
-api.post("/retoB",createReto.readRetoB)
+api.post("/readReto",createReto.readReto)
+api.post("/registrarGrupo",createReto.registrarGrupo)
 api.post("/deleteReto",createReto.deleteReto)
 
 
