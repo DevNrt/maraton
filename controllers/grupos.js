@@ -31,8 +31,8 @@ async function createGrupo(req, res) {
     dataLider[i] = doc1.data();
     i++;
   });
-
-  if (data.cargo != "lider" || dataLider != []) {
+  console.log(dataLider);
+  if (data.cargo != "lider" || dataLider.length != 0) {
     res.send("No es lider o ya esta registrado en un equipo");
   } else {
     if (req.body.nombre == "" || req.body.lider == "") {
