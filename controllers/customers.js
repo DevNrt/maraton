@@ -1,4 +1,4 @@
-import db from "/Users/nicolasrodriguez/Downloads/maraton_back/databases/firebases.js";
+import db from "/Users/Sebastián/Downloads/MODELOS/maraton-main/databases/firebases.js";
 import {
   collection,
   addDoc,

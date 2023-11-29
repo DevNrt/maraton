@@ -1,4 +1,4 @@
-import db from "/Users/nicolasrodriguez/Downloads/maraton_back/databases/firebases.js";
+import db from "/Users/Sebastián/Downloads/MODELOS/maraton-main/databases/firebases.js";
 import login from "./customerAuth.js";
 import {
   getAuth,
@@ -30,7 +30,7 @@ async function createUser(req, res) {
           res.send("Error: That email address is invalid!");
         }
 
-        res.send("Error"+error);
+        res.send("Error:"+error);
       });
   }
 }
@@ -45,17 +45,18 @@ async function LoginUser(req, res) {
     await signInWithEmailAndPassword(auth, req.body.user, req.body.pass)
       .then((userCredential) => {
         const user = userCredential.user;
-        res.send(user);
+        res.send(user.email);
       })
       .catch((error) => {
         if (error.code === "auth/too-many-requests") {
-          res.send("Error Usuario desactivado por muchos intentos!");
+          res.send("Error: Usuario desactivado por muchos intentos!");
         } else if (
           error.code === "auth/invalid-email" ||
-          error.code === "auth/wrong-password"
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/invalid-login-credentials" 
         ) {
-          res.send("Error Email or password incorrecto!");
-        } else {
+          res.send("Error: Email o contraseña incorrectos!");
+        } else{
           res.send(error);
         }
       });
