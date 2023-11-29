@@ -69,7 +69,7 @@ async function registrarGrupo(req, res) {
   const q1 = query(reto, where("nombreReto", "==", req.body.nombreReto));
   const querySnapshot1 = await getDocs(q1);
   var id = " ";
-  var dataReto = [];
+  var dataReto =[];
   querySnapshot1.forEach((doc1) => {
     dataReto[i]=doc1.data();
     id = doc1.id;
@@ -78,11 +78,12 @@ async function registrarGrupo(req, res) {
 
   dataReto=dataReto[1].gruposAso
  
-  dataReto=dataReto.concat(dataGrupo[0])
+  dataReto=dataReto.concat(dataGrupo[0].nombre)
+  
  
   const retosId = doc(firestore, "Retos", id);
     updateDoc(retosId, {
-      "gruposAso": dataReto,
+      gruposAso: dataReto,
     })
       .then(() => {
         res.send("Notificación: Reto actualizado!");

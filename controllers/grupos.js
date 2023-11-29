@@ -96,7 +96,8 @@ async function registrarIntegrantes(req, res) {
       dataInte[j] = doc1.data();
       j++;
     });
-    if (dataInte[0].integrantes != []) {
+    
+    if (dataInte.length != 0) {
       res.send("integrante registrado en otro grupo");
     } else {
       dataGrupo = dataGrupo[1].integrantes;
