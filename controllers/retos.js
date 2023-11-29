@@ -17,14 +17,28 @@ const firestore = db.database;
 
 
 async function createReto(req, res) {
+  const admin = collection(firestore, "Admins");
+  const q1 = query(admin, where("correo", "==", req.body.correo));
+  const querySnapshot1 = await getDocs(q1);
+  var dataAdmin = [];
+  var i = 0;
+  querySnapshot1.forEach((doc1) => {
+    
+    dataAdmin[i] = doc1.data();
+    i++;
+  });
+  
   if (
     req.body.nombreReto == "" || req.body.descripcion ==""
   ) {
     res.send("Error: Campos vacios!");
+  } else if (dataAdmin.length==0){
+    res.send("Error: No eres admin!");
   } else {
     var datosReto = {
       nombreReto: req.body.nombreReto,
-      gruposAso: req.body.gruposAso,
+      categoria: req.body.categoria,
+      gruposAso: [],
       descripcion: req.body.descripcion
     };
 

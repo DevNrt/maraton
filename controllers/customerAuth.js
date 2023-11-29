@@ -1,4 +1,4 @@
-import db from "/Users/Sebastián/Downloads/MODELOS/maraton-main/databases/firebases.js";
+import database from "../databases/firebases.js";
 import login from "./customerAuth.js";
 import {
   getAuth,
@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 
 async function createUser(req, res) {
-  const app = db.app;
+  const app = database.app;
   const auth = getAuth(app);
 
   if (req.body.user == "" || req.body.pass == "") {
@@ -36,7 +36,7 @@ async function createUser(req, res) {
 }
 
 async function LoginUser(req, res) {
-  const app = db.app;
+  const app = database.app;
   const auth = getAuth(app);
 
   if (req.body.user == "" || req.body.pass == "") {
@@ -64,7 +64,7 @@ async function LoginUser(req, res) {
 }
 
 function deleteU(req, res) {
-  const app = db.app;
+  const app = database.app;
   const auth = getAuth(app);
 
   signInWithEmailAndPassword(auth, req.body.user, req.body.pass)
@@ -84,7 +84,7 @@ function deleteU(req, res) {
 }
 
 function updateE(req, res) {
-  const app = db.app;
+  const app = database.app;
   const auth = getAuth(app);
 
   signInWithEmailAndPassword(auth, req.body.user, req.body.pass)
@@ -104,7 +104,7 @@ function updateE(req, res) {
 }
 
 function updateP(req, res) {
-  const app = db.app;
+  const app = database.app;
   const auth = getAuth(app);
 
   signInWithEmailAndPassword(auth, req.body.user, req.body.pass)
