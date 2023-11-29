@@ -98,23 +98,35 @@ async function readReto(req, res) {
   res.send(data);
 }
 
-async function deleteReto(req, res) {
-  const grupo = collection(firestore, "Retos");
-  const q = query(grupo, where("lider", "==", req.body.lider));
-  const querySnapshot = await getDocs(q);
-  var id = " ";
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    id = doc.id;
-  });
-  const retoId = doc(firestore, "Retos", id);
-  await deleteDoc(nivelId)
-    .then(() => {
-      res.send("Notificación: reto eliminado!");
-    })
-    .catch((error) => {
-      res.send(error);
+
+
+function deleteReto(req, res) {
+  diasAsegundos(req.body.dias)
+  setTimeout(async function(){
+    const reto = collection(firestore, "Retos");
+    const q = query(reto, where("nombreReto", "==", req.body.nombreReto));
+    const querySnapshot = await getDocs(q);
+    var id = " ";
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      id = doc.id;
     });
+    const retoId = doc(firestore, "Retos", id);
+    await deleteDoc(retoId)
+      .then(() => {
+        res.send("Notificación: reto eliminado!");
+      })
+      .catch((error) => {
+        res.send(error);
+      });
+  }, 10000);
+  
+}
+
+function diasAsegundos(dias) {
+  var segundos=0;
+  segundos=(dias*24*60*60)*1000
+  return segundos;
 }
 
 export default {
