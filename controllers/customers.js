@@ -48,11 +48,17 @@ async function createCustomer(req, res) {
 
 async function updateCustomer(req, res) {
   const concursante = collection(firestore, "Concursante");
-  var variableCambiare = "";
-
-  if (req.body.nombreN != undefined) {
-    variableCambiare = req.body.nombreN;
-    const q = query(concursante, where("nombre", "==", req.body.nombreA));
+  
+    var variableCambiare = {
+      nombre: req.body.nombre,
+      apellido: req.body.apellido,
+      codigo: req.body.codigo,
+      carrera: req.body.carrera,
+      nivel: req.body.nivel,
+      correo: req.body.correo,
+      cargo: req.body.cargo
+    };
+    const q = query(concursante, where("codigo", "==", req.body.codigo));
     const querySnapshot = await getDocs(q);
     var id = " ";
 
@@ -62,133 +68,42 @@ async function updateCustomer(req, res) {
     });
 
     const concursanteId = doc(firestore, "Concursante", id);
-    updateDoc(concursanteId, {
-      nombre: variableCambiare,
-    })
+    updateDoc(concursanteId,variableCambiare)
       .then(() => {
         res.send("Notificación: Usuario actualizado!");
       })
       .catch((error) => {
         res.send(error);
       });
-  } else if (req.body.apellidoN != undefined) {
-    variableCambiare = req.body.apellidoN;
-    const q = query(concursante, where("apellido", "==", req.body.apellidoA));
-    const querySnapshot = await getDocs(q);
-    var id = " ";
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      id = doc.id;
-    });
-
-    const concursanteId = doc(firestore, "Concursante", id);
-    updateDoc(concursanteId, {
-      apellido: variableCambiare,
-    })
-      .then(() => {
-        res.send("Notificación: Usuario actualizado!");
-      })
-      .catch((error) => {
-        res.send(error);
-      });
-  } else if (req.body.codigoN != undefined) {
-    variableCambiare = req.body.codigoN;
-    const q = query(concursante, where("codigo", "==", req.body.codigoA));
-    const querySnapshot = await getDocs(q);
-    var id = " ";
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      id = doc.id;
-    });
-
-    const concursanteId = doc(firestore, "Concursante", id);
-    await updateDoc(concursanteId, {
-      codigo: variableCambiare,
-    })
-      .then(() => {
-        res.send("Notificación: Usuario actualizado!");
-      })
-      .catch((error) => {
-        res.send(error);
-      });
-  } else if (req.body.carreraN != undefined) {
-    variableCambiare = req.body.carreraN;
-    const q = query(concursante, where("carrera", "==", req.body.carreraA));
-    const querySnapshot = await getDocs(q);
-    var id = " ";
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      id = doc.id;
-    });
-
-    const concursanteId = doc(firestore, "Concursante", id);
-    await updateDoc(concursanteId, {
-      carrera: variableCambiare,
-    })
-      .then(() => {
-        res.send("Notificación: Usuario actualizado!");
-      })
-      .catch((error) => {
-        res.send(error);
-      });
-  } else if (req.body.nivelN != undefined) {
-    variableCambiare = req.body.nivelN;
-    const q = query(concursante, where("nivel", "==", req.body.nivelA));
-    const querySnapshot = await getDocs(q);
-    var id = " ";
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      id = doc.id;
-    });
-
-    const concursanteId = doc(firestore, "Concursante", id);
-    await updateDoc(concursanteId, {
-      nivel: variableCambiare,
-    })
-      .then(() => {
-        res.send("Notificación: Usuario actualizado!");
-      })
-      .catch((error) => {
-        res.send(error);
-      });
-  } else if (req.body.correoN != undefined) {
-    variableCambiare = req.body.correoN;
-    const q = query(concursante, where("correo", "==", req.body.correoA));
-    const querySnapshot = await getDocs(q);
-    var id = " ";
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      id = doc.id;
-    });
-
-    const concursanteId = doc(firestore, "Concursante", id);
-    await updateDoc(concursanteId, {
-      correo: variableCambiare,
-    })
-      .then(() => {
-        res.send("Notificación: Usuario actualizado!");
-      })
-      .catch((error) => {
-        res.send(error);
-      });
-  }
 }
 
 async function readCustomer(req, res) {
-  const concursante = collection(firestore, "Concursante");
-  const q = query(concursante, where("codigo", "==", req.body.codigo));
-  const querySnapshot = await getDocs(q);
-  var data = "";
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    data = doc.data();
+  const admin = collection(firestore, "Admins");
+  const q1 = query(admin, where("correo", "==", req.body.correo));
+  const querySnapshot1 = await getDocs(q1);
+  var dataAdmin = [];
+  var i = 0;
+  querySnapshot1.forEach((doc1) => {
+    
+    dataAdmin[i] = doc1.data();
+    i++;
   });
-  res.send(data);
+
+  if (dataAdmin.length==0){
+    res.send("Error: No eres admin!");
+  } else{
+    const q = query(collection(db.database, "Concursante"));
+    const querySnapshot = await getDocs(q);
+    var data = [];
+    var i=0;
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      data[i] = doc.data();
+      i++;
+    });
+    res.send(data);
+  }
+  
 }
 
 async function readCustomers(req, res) {
